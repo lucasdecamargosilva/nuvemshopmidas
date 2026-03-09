@@ -142,6 +142,13 @@
             overflow: visible;
         }
 
+        @media (min-width: 768px) {
+            .q-btn-trigger-ia {
+                width: 75px;
+                height: 75px;
+            }
+        }
+
         #q-modal-ia { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 999999; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; }
         .q-card-ia { background: var(--q-bg); width: 100%; max-width: 480px; padding: 0; position: relative; color: var(--q-text); border: 1px solid var(--q-border); max-height: 94vh; display: flex; flex-direction: column; overflow: hidden; }
         .q-content-scroll { padding: 40px 30px; overflow-y: auto; flex: 1; text-align: center; }
