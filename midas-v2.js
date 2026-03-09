@@ -2,7 +2,7 @@
     // ===============================================
     // 0. CHUMBAR A API KEY AQUI DIRETO NO CÓDIGO
     // ===============================================
-    const apiKey = "pl_live_e18eb1e2b9e130dc37579aa808e20d9138000048036509c22d7719bfa6db5b6e";
+    const apiKey = "pl_live_446acf54c09daeef51981e1185c528fd53edc514ef1ec001cd286ed57880832b";
     window.PROVOU_LEVOU_API_KEY = apiKey;
 
     const WEBHOOK_PROVA = 'https://n8n.segredosdodrop.com/webhook/quantic-materialize';
@@ -525,6 +525,22 @@
 
 
                 const res = await fetch(WEBHOOK_PROVA, { method: 'POST', body: fd });
+
+                const contentType = res.headers.get("content-type") || "";
+                if (contentType.includes("application/json")) {
+                    const data = await res.json();
+                    if (data.error) {
+                        document.getElementById('q-loading-box').style.display = 'none';
+                        document.getElementById('q-step-upload').style.display = 'block';
+                        if (data.error === "Chave invalida, vencida ou inativa." || data.error.includes("vencida ou inativa")) {
+                            alert("App desativado nesta loja");
+                        } else {
+                            alert(data.error);
+                        }
+                        return;
+                    }
+                }
+
                 if (res.ok) {
                     const blob = await res.blob();
                     document.getElementById('q-loading-box').style.display = 'none';
@@ -541,7 +557,7 @@
                 } else if (res.status === 401 || res.status === 403) {
                     document.getElementById('q-loading-box').style.display = 'none';
                     document.getElementById('q-step-upload').style.display = 'block';
-                    alert("Provas virtuais indisponíveis nesta loja no momento. (Assinatura Inativa/Chave Inválida)");
+                    alert("App desativado nesta loja");
                 } else { throw new Error(); }
             } catch (e) {
                 document.getElementById('q-loading-box').style.display = 'none';
