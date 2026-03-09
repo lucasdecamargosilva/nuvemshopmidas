@@ -275,9 +275,9 @@
                             </div>
                         </div>
 
-                        <div class="q-lead-form" id="q-photo-selector-group" style="margin-top:30px; margin-bottom:0; display:none; flex-direction: column; align-items: flex-start;">
-                            <label style="margin-bottom:15px; text-transform:uppercase; letter-spacing:1px; font-weight:400; font-size:12px;">Selecione a foto da peça:</label>
-                            <div id="q-product-images-container" style="display:flex; gap:15px; justify-content: flex-start;"></div>
+                        <div class="q-lead-form" id="q-photo-selector-group" style="margin-top:30px; margin-bottom:0; display:none; flex-direction: column; align-items: center;">
+                            <label style="margin-bottom:15px; text-transform:uppercase; letter-spacing:1px; font-weight:400; font-size:12px; text-align:center; width:100%;">Selecione a foto da peça:</label>
+                            <div id="q-product-images-container" style="display:flex; gap:15px; justify-content: center;"></div>
                         </div>
 
                         <div style="font-weight:700; color:#ef4444; font-size:10px; text-align:center; width:100%; display:block; margin-top:20px; line-height:1.4; text-transform:uppercase; letter-spacing:0.5px;">
