@@ -280,7 +280,7 @@
                             <div id="q-product-images-container" style="display:flex; gap:15px; justify-content: flex-start;"></div>
                         </div>
 
-                        <div style="font-weight:700; color:#ef4444; font-size:10px; text-align:center; margin-top:20px; line-height:1.4; text-transform:uppercase; letter-spacing:0.5px;">
+                        <div style="font-weight:700; color:#ef4444; font-size:10px; text-align:center; width:100%; display:block; margin-top:20px; line-height:1.4; text-transform:uppercase; letter-spacing:0.5px;">
                             <span style="color:#eab308; font-size:12px;">⚠️</span> SE VOCÊ ESCOLHEU A PEÇA DE COSTAS, ENVIE UMA FOTO SUA DE COSTAS TAMBÉM!
                         </div>
 
@@ -404,7 +404,8 @@
         let selectedProductImgUrl = '';
 
         function extractImages() {
-            const possibleContainers = Array.from(document.querySelectorAll('.js-product-slide, .product__media, .product-single__photo, [data-component="product.gallery"], .swiper-slide:not(.swiper-slide-duplicate), .product-image-container, .slider-wrapper'));
+            const containersSelectors = '.js-product-slide, .product-image-column, .js-swiper-product, [data-store^="product-image-"], .product__media-wrapper, .product-gallery__media, .product__media, .product-image-main, .product-media-container, [data-media-id], .product__media-item, .product-gallery, .product-single__media, .media-gallery, [data-component="product.gallery"], .swiper-slide:not(.swiper-slide-duplicate), .slider-wrapper';
+            const possibleContainers = Array.from(document.querySelectorAll(containersSelectors));
             let imgEls = [];
             possibleContainers.forEach(c => {
                 if (!c.closest('#q-modal-ia')) {
