@@ -269,36 +269,25 @@
                     <div id="q-step-upload">
                         <div class="q-lead-form" style="margin-bottom:0;">
                             <div class="q-group">
-                                <label>Seu WhatsApp</label>
+                                <label style="text-transform:uppercase; letter-spacing:1px; font-weight:700; font-size:10px;">Seu WhatsApp</label>
                                 <input type="tel" id="q-phone" class="q-input" placeholder="(11) 99999-9999" maxlength="15">
                                 <div id="q-phone-error" class="q-status-msg">Insira um número válido</div>
                             </div>
-                            
-                            <div class="q-input-row" style="margin-top:20px;">
-                                <div class="q-group">
-                                    <label>Altura (cm)</label>
-                                    <input type="number" id="q-h-val" class="q-input" placeholder="Ex: 175" min="100" max="230">
-                                </div>
-                                <div class="q-group">
-                                    <label>Peso (kg)</label>
-                                    <input type="number" id="q-w-val" class="q-input" placeholder="Ex: 80" min="30" max="200">
-                                </div>
-                            </div>
                         </div>
 
-                        <div class="q-lead-form" id="q-photo-selector-group" style="margin-top:30px; margin-bottom:0; display:none; flex-direction: column; align-items: center;">
-                            <label style="margin-bottom:15px; text-transform:uppercase; letter-spacing:1px; font-size:10px;">Escolha Frente ou Costas:</label>
-                            <div id="q-product-images-container" style="display:flex; gap:15px; justify-content: center;"></div>
+                        <div class="q-lead-form" id="q-photo-selector-group" style="margin-top:30px; margin-bottom:0; display:none; flex-direction: column; align-items: flex-start;">
+                            <label style="margin-bottom:15px; text-transform:uppercase; letter-spacing:1px; font-weight:400; font-size:12px;">Selecione a foto da peça:</label>
+                            <div id="q-product-images-container" style="display:flex; gap:15px; justify-content: flex-start;"></div>
                         </div>
 
-                        <div style="background-color:#fef0c7; color:#b45309; border:1px solid #fde08b; padding:15px; border-radius:8px; font-size:10px; text-align:center; margin-top:20px; line-height:1.4;">
-                            ⚠️ Se você escolheu a foto de costas, envie uma foto sua também de costas, se escolheu a frente, envie de frente.
+                        <div style="font-weight:700; color:#ef4444; font-size:10px; text-align:left; margin-top:20px; line-height:1.4; text-transform:uppercase; letter-spacing:0.5px;">
+                            <span style="color:#eab308; font-size:12px;">⚠️</span> SE VOCÊ ESCOLHEU A PEÇA DE COSTAS, ENVIE UMA FOTO SUA DE COSTAS TAMBÉM!
                         </div>
 
                         <p style="margin:25px 0 15px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--q-text-light);text-align:center;">Sua foto deve seguir estes requisitos:</p>
                         <div class="q-tips-grid" style="margin-top:0;">
                             <div class="q-tip-item"><i class="ph ph-t-shirt"></i><span>Com Roupa</span></div>
-                            <div class="q-tip-item"><i class="ph ph-person"></i><span>Corpo Todo</span></div>
+                            <div class="q-tip-item"><i class="ph ph-person"></i><span>Corpo Inteiro</span></div>
                             <div class="q-tip-item"><i class="ph ph-sun"></i><span>Boa Luz</span></div>
                         </div>
 
@@ -415,12 +404,19 @@
         let selectedProductImgUrl = '';
 
         function extractImages() {
-            const imgEls = Array.from(document.querySelectorAll('.js-product-slide img, .product__media img, .product-single__photo, [data-component="product.gallery"] img, .swiper-slide:not(.swiper-slide-duplicate) img, .product-image-container img'));
+            const possibleContainers = Array.from(document.querySelectorAll('.js-product-slide, .product__media, .product-single__photo, [data-component="product.gallery"], .swiper-slide:not(.swiper-slide-duplicate), .product-image-container'));
+            let imgEls = [];
+            possibleContainers.forEach(c => {
+                if (!c.closest('#q-modal-ia')) {
+                    const foundImgs = c.querySelectorAll('img');
+                    imgEls.push(...Array.from(foundImgs));
+                }
+            });
             let uniqueImgs = [];
             let signatures = [];
             imgEls.forEach(img => {
                 let src = img.src || img.dataset?.src;
-                if (!src || src.includes('data:image') || src.includes('logo_provador')) return;
+                if (!src || src.includes('data:image') || src.includes('logo_provador') || src.includes('provoulevou')) return;
                 let sig = src.replace(/-\d+-\d+\.webp|\?v=\d+|_\d+x\d+/, '');
                 if (!signatures.includes(sig)) {
                     signatures.push(sig);
@@ -535,11 +531,7 @@
             document.getElementById('q-phone-error').style.display = (phoneInput.value.length > 0 && !phoneOk) ? 'block' : 'none';
             phoneInput.style.borderColor = (phoneInput.value.length > 0 && !phoneOk) ? '#ef4444' : 'var(--q-border)';
 
-            const hVal = document.getElementById('q-h-val').value;
-            const wVal = document.getElementById('q-w-val').value;
-            const hwOk = hVal > 0 && wVal > 0;
-
-            genBtn.disabled = !(userPhoto && phoneOk && hwOk);
+            genBtn.disabled = !(userPhoto && phoneOk);
         }
 
 
@@ -592,15 +584,12 @@
                 fd.append('api_key', keyToUse);
 
 
-                const hVal = document.getElementById('q-h-val').value;
-                const wVal = document.getElementById('q-w-val').value;
-
                 if (currentProduct.category === 'top') {
-                    fd.append('height', hVal);
-                    fd.append('weight', wVal);
+                    fd.append('height', '');
+                    fd.append('weight', '');
                 } else {
-                    fd.append('height', hVal);
-                    fd.append('weight', wVal);
+                    fd.append('height', '');
+                    fd.append('weight', '');
                     fd.append('cintura', '');
                     fd.append('quadril', '');
                 }
