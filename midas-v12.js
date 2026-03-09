@@ -415,7 +415,17 @@
             });
             let uniqueImgs = [];
             imgEls.forEach(img => {
-                let src = img.src || img.dataset?.src;
+                let src = img.dataset?.src || img.getAttribute('data-src') || img.src;
+
+                if (src && src.includes('data:image')) {
+                    const parentA = img.closest('a');
+                    if (parentA && parentA.href && !parentA.href.includes('javascript:')) {
+                        src = parentA.href;
+                    } else if (img.getAttribute('data-srcset')) {
+                        src = img.getAttribute('data-srcset').split(',')[0].trim().split(' ')[0];
+                    }
+                }
+
                 if (!src || src.includes('data:image')) return;
 
                 const lowerSrc = src.toLowerCase();
