@@ -64,35 +64,9 @@
     let recommendedSize = 'M';
     let currentProduct = { category: 'top', fit: 'regular' };
 
-
-    function calcTop(fit) {
-        const altura = parseFloat(document.getElementById('q-h-val').value);
-        const peso = parseFloat(document.getElementById('q-w-val').value);
-        if (!altura || !peso) return;
-        const torax = estimarTorax(altura, peso);
-        const folga = { regular: 4, oversized: 8, oversizedSS: 8, hoodie: 6, boxyHoodie: 12, puffer: 10, vest: 5, boxyHenley: 9 };
-        const larguraAlvo = torax / 2 + (folga[fit] || 4);
-        recommendedSize = SIZES_TOP[findClosest(GRADE[fit], larguraAlvo)];
-        document.getElementById('q-res-letter').innerText = recommendedSize;
-    }
-
-
-    function calcBottom(fit) {
-        const cintura = parseFloat(document.getElementById('q-cin-val').value);
-        const quadril = parseFloat(document.getElementById('q-quad-val').value);
-        if (!cintura || !quadril) return;
-        let gradeC, gradeQ, sizes;
-        if (fit === 'tailoring') { gradeC = GRADE.bottomTailoring; gradeQ = GRADE.quadrilTailoring; sizes = SIZES_BOTTOM; }
-        else if (fit === 'underwear') { gradeC = GRADE.underwear; gradeQ = GRADE.quadrilUnderwear; sizes = SIZES_BOTTOM_SW; }
-        else { gradeC = GRADE.bottomSweat; gradeQ = GRADE.quadrilSweat; sizes = SIZES_BOTTOM_SW; }
-        recommendedSize = sizes[Math.max(findClosest(gradeC, cintura / 2), findClosest(gradeQ, quadril / 2))];
-        document.getElementById('q-res-letter').innerText = recommendedSize;
-    }
-
-
     function calculateFinalSize() {
-        if (currentProduct.category === 'top') calcTop(currentProduct.fit);
-        else calcBottom(currentProduct.fit);
+        // Feature desativada: não faz mais cálculos de tamanho
+        return;
     }
 
 
@@ -229,25 +203,6 @@
                 display: block !important; font-size: 11px; color: var(--q-text-light);
                 letter-spacing: 1px; text-transform: uppercase; margin-bottom: 30px;
             }
-            .q-card-ia.is-result .q-metrics-row { display: flex !important; gap: 15px; margin-bottom: 30px; }
-            .q-card-ia.is-result .q-metric-card { flex: 1; background: transparent; border: 1px solid var(--q-border); border-radius: 0; padding: 16px; }
-            .q-card-ia.is-result .q-metric-label { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--q-text-light); margin-bottom: 6px; display: block; }
-            .q-card-ia.is-result .q-metric-value { font-size: 20px; font-weight: 700; color: var(--q-text); }
-            .q-card-ia.is-result .q-metric-unit { font-size: 12px; color: var(--q-text-light); margin-left: 2px; }
-            .q-card-ia.is-result .q-size-card {
-                display: flex !important; align-items: center; gap: 16px;
-                background: var(--q-gray); border: 1px solid var(--q-border);
-                border-radius: 0; padding: 20px; margin-bottom: 24px;
-            }
-            .q-card-ia.is-result .q-size-circle {
-                width: 44px; height: 44px; border-radius: 50%; background: var(--q-primary);
-                color: var(--q-bg); display: flex; align-items: center; justify-content: center;
-                font-size: 18px; font-weight: 700; flex-shrink: 0;
-            }
-            .q-card-ia.is-result .q-size-info { flex: 1; }
-            .q-card-ia.is-result .q-size-info strong { display: block; font-size: 11px; font-weight: 600; color: var(--q-text); margin-bottom: 4px; letter-spacing: 1.5px; text-transform: uppercase; }
-            .q-card-ia.is-result .q-size-info span { font-size: 9px; color: var(--q-text-light); letter-spacing: 1px; text-transform: uppercase; display: block; }
-            .q-card-ia.is-result .q-size-check { color: var(--q-primary); font-size: 24px; flex-shrink: 0; }
             .q-card-ia.is-result .q-res-note {
                 display: flex !important; align-items: flex-start; gap: 8px; font-size: 10px;
                 color: var(--q-text-light); font-style: italic; letter-spacing: 1px; margin-bottom: 24px; line-height: 1.5;
@@ -297,18 +252,6 @@
                                 <input type="tel" id="q-phone" class="q-input" placeholder="(11) 99999-9999" maxlength="15">
                                 <div id="q-phone-error" class="q-status-msg">Insira um número válido</div>
                             </div>
-                            <div id="q-fields-top" style="display:none;">
-                                <div class="q-input-row">
-                                    <div class="q-group"><label>Altura (cm)</label><input type="text" id="q-h-val" class="q-input" placeholder="Ex: 175"></div>
-                                    <div class="q-group"><label>Peso (kg)</label><input type="text" id="q-w-val" class="q-input" placeholder="Ex: 80"></div>
-                                </div>
-                            </div>
-                            <div id="q-fields-bottom" style="display:none;">
-                                <div class="q-input-row">
-                                    <div class="q-group"><label>Cintura (cm)</label><input type="text" id="q-cin-val" class="q-input" placeholder="Ex: 84"><p class="q-input-hint">Meça ao redor do umbigo</p></div>
-                                    <div class="q-group"><label>Quadril (cm)</label><input type="text" id="q-quad-val" class="q-input" placeholder="Ex: 100"><p class="q-input-hint">Parte mais larga do quadril</p></div>
-                                </div>
-                            </div>
                         </div>
                         <p style="margin:10px 0 10px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--q-text-light);text-align:center;">Sua foto deve seguir estes requisitos:</p>
                         <div class="q-tips-grid" style="margin-top:0;">
@@ -343,32 +286,8 @@
                             <img id="q-final-view-img" style="width:100%;height:auto;display:block;">
                         </div>
                         <div id="q-result-actions-col" style="width:100%;">
-                            <span class="q-res-title" style="display:none;">Provador Virtual</span>
-                            <span class="q-res-subtitle" style="display:none;">Simulação baseada no seu perfil corporal</span>
-                            <div class="q-metrics-row" style="display:none;">
-                                <div class="q-metric-card">
-                                    <span class="q-metric-label">Altura</span>
-                                    <span class="q-metric-value" id="q-res-height">—</span>
-                                    <span class="q-metric-unit">m</span>
-                                </div>
-                                <div class="q-metric-card">
-                                    <span class="q-metric-label">Peso</span>
-                                    <span class="q-metric-value" id="q-res-weight">—</span>
-                                    <span class="q-metric-unit">kg</span>
-                                </div>
-                            </div>
-                            <div class="q-size-card" style="display:none;">
-                                <div class="q-size-circle" id="q-res-letter-pc">M</div>
-                                <div class="q-size-info">
-                                    <strong>Tamanho Recomendado</strong>
-                                    <span>Ajuste ideal para o seu perfil</span>
-                                </div>
-                                <i class="ph ph-seal-check q-size-check"></i>
-                            </div>
-                            <div class="q-res-mobile-only" style="border-top:1px solid var(--q-border);border-bottom:1px solid var(--q-border);padding:20px 0;width:100%;margin-bottom:30px;display:flex;justify-content:space-between;align-items:center;">
-                                <span style="font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--q-text-light);">Tamanho Ideal</span>
-                                <div id="q-res-letter" style="font-size:24px;font-weight:400;font-family:monospace;line-height:1;">M</div>
-                            </div>
+                            <span class="q-res-title" style="display:block; margin-bottom:40px;">Provador Virtual</span>
+                            
                             <div class="q-res-note" style="display:none;">
                                 <i class="ph ph-info"></i>
                                 <span>A simulação AI considera o caimento do tecido baseado na sua estrutura corporal informada.</span>
@@ -470,8 +389,6 @@
 
         function applyProduct(product) {
             currentProduct = product;
-            document.getElementById('q-fields-top').style.display = product.category === 'top' ? 'block' : 'none';
-            document.getElementById('q-fields-bottom').style.display = product.category === 'bottom' ? 'block' : 'none';
         }
 
 
@@ -516,10 +433,8 @@
             const phoneOk = nums.length >= 10 && nums.length <= 11;
             document.getElementById('q-phone-error').style.display = (phoneInput.value.length > 0 && !phoneOk) ? 'block' : 'none';
             phoneInput.style.borderColor = (phoneInput.value.length > 0 && !phoneOk) ? '#ef4444' : 'var(--q-border)';
-            let measOk = currentProduct.category === 'top'
-                ? !!document.getElementById('q-h-val').value && !!document.getElementById('q-w-val').value
-                : !!document.getElementById('q-cin-val').value && !!document.getElementById('q-quad-val').value;
-            genBtn.disabled = !(measOk && userPhoto && phoneOk);
+            // Medidas removidas, precisamos apenas do telefone e foto
+            genBtn.disabled = !(userPhoto && phoneOk);
         }
 
 
@@ -573,12 +488,13 @@
                 fd.append('api_key', keyToUse);
 
 
+                // Para compatibilidade com o backend que pode esperar estes campos, enviamos vazio
                 if (currentProduct.category === 'top') {
-                    fd.append('height', document.getElementById('q-h-val').value);
-                    fd.append('weight', document.getElementById('q-w-val').value);
+                    fd.append('height', '');
+                    fd.append('weight', '');
                 } else {
-                    fd.append('cintura', document.getElementById('q-cin-val').value);
-                    fd.append('quadril', document.getElementById('q-quad-val').value);
+                    fd.append('cintura', '');
+                    fd.append('quadril', '');
                 }
 
 
@@ -597,17 +513,7 @@
                     document.getElementById('q-final-view-img').src = URL.createObjectURL(blob);
 
 
-                    const hVal = document.getElementById('q-h-val').value;
-                    const wVal = document.getElementById('q-w-val').value;
-                    const cVal = document.getElementById('q-cin-val').value;
-                    const resH = document.getElementById('q-res-height');
-                    const resW = document.getElementById('q-res-weight');
-                    if (resH) resH.textContent = hVal ? (parseFloat(hVal) / 100).toFixed(2) : '—';
-                    if (resW) resW.textContent = wVal || (cVal ? cVal + ' cm' : '—');
-
-
-                    const letterPC = document.getElementById('q-res-letter-pc');
-                    if (letterPC) letterPC.textContent = recommendedSize;
+                    // Size recomendation desativado. DOM info removido da tela.
 
 
                     document.querySelector('.q-card-ia').classList.add('is-result');
@@ -631,50 +537,9 @@
 
 
         document.getElementById('q-add-to-cart-btn').onclick = () => {
-            const size = recommendedSize;
-
-
-            const swatchSelectors = [
-                `input[type="radio"][data-value="${size}"]`,
-                `input[type="radio"][value="${size}"]`,
-                `button[data-value="${size}"]`,
-                `button[value="${size}"]`,
-                `.swatch__input[value="${size}"]`,
-                `[data-option-value="${size}"]`,
-                `.variant-option input[value="${size}"]`,
-                `.product-form__option input[value="${size}"]`,
-            ];
-
-
-            let selected = false;
-            for (const sel of swatchSelectors) {
-                const el = document.querySelector(sel);
-                if (el) {
-                    el.click();
-                    el.dispatchEvent(new Event('change', { bubbles: true }));
-                    el.dispatchEvent(new Event('input', { bubbles: true }));
-                    selected = true;
-                    break;
-                }
-            }
-
-
-            if (!selected) {
-                const selects = document.querySelectorAll('select');
-                for (const sel of selects) {
-                    const opt = [...sel.options].find(o =>
-                        o.value.trim().toUpperCase() === size.toUpperCase() ||
-                        o.text.trim().toUpperCase() === size.toUpperCase()
-                    );
-                    if (opt) {
-                        sel.value = opt.value;
-                        sel.dispatchEvent(new Event('change', { bubbles: true }));
-                        selected = true;
-                        break;
-                    }
-                }
-            }
-
+            // A seleção automática de tamanho foi removida.
+            // O cliente deve ter selecionado o tamanho na página antes/depois, 
+            // ou a loja abrirá o seletor automaticamente caso esteja vazio.
 
             function tryAddToCart() {
                 const addBtnSelectors = [
@@ -704,7 +569,7 @@
                 const ok = tryAddToCart();
                 if (!ok) setTimeout(() => tryAddToCart(), 400);
                 closeModal();
-            }, selected ? 300 : 0);
+            }, 0);
         };
     }
 
