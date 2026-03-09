@@ -303,20 +303,16 @@
 
 
                     <div id="q-step-result" style="display:none;flex-direction:column;align-items:center;">
-                        <div id="q-result-img-col" style="width:100%;border:1px solid var(--q-border);margin-bottom:30px;background:var(--q-gray);">
+                        <div id="q-result-img-col" style="width:100%;border:1px solid var(--q-border);margin-bottom:60px;background:var(--q-gray);">
                             <img id="q-final-view-img" style="width:100%;height:auto;display:block;">
                         </div>
                         <div id="q-result-actions-col" style="width:100%;">
-                            <span class="q-res-title" style="display:block; margin-bottom:40px;">Provador Virtual</span>
+                            <span class="q-res-title" style="display:none; margin-bottom:40px;">Provador Virtual</span>
                             
                             <div class="q-res-note" style="display:none;">
                                 <i class="ph ph-info"></i>
                                 <span>A simulação AI considera o caimento do tecido baseado na sua estrutura corporal informada.</span>
                             </div>
-                            <button class="q-btn-buy" id="q-add-to-cart-btn">
-                                <i class="ph ph-shopping-cart"></i>
-                                Adicionar ao Carrinho
-                            </button>
                             <button class="q-btn-outline" id="q-btn-back">Voltar ao Produto</button>
                             <p class="q-res-mobile-only" style="margin-top:30px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--q-text-light);cursor:pointer;text-decoration:underline;text-underline-offset:4px;" id="q-retry-btn">Tentar outra foto</p>
                         </div>
@@ -574,55 +570,19 @@
         };
 
 
-        // ─── ADICIONAR AO CARRINHO COM SELEÇÃO AUTOMÁTICA DO TAMANHO ─────────────
+    };
 
-
-        document.getElementById('q-add-to-cart-btn').onclick = () => {
-            // A seleção automática de tamanho foi removida.
-            // O cliente deve ter selecionado o tamanho na página antes/depois, 
-            // ou a loja abrirá o seletor automaticamente caso esteja vazio.
-
-            function tryAddToCart() {
-                const addBtnSelectors = [
-                    'button[name="add"]',
-                    'button.product-form__submit',
-                    '.btn-add-to-cart',
-                    '[data-action="add-to-cart"]',
-                    'button[data-btn-addtocart]',
-                    '.product-form button[type="submit"]',
-                    'form[action*="/cart/add"] button[type="submit"]',
-                    '#AddToCart',
-                    '#add-to-cart',
-                    '.add-to-cart',
-                    '[id*="add-to-cart"]',
-                    '[class*="add-to-cart"]',
-                    '[class*="addtocart"]',
-                ];
-                for (const sel of addBtnSelectors) {
-                    const btn = document.querySelector(sel);
-                    if (btn && !btn.disabled) { btn.click(); return true; }
-                }
-                return false;
-            }
-
-
-            setTimeout(() => {
-                const ok = tryAddToCart();
-                if (!ok) setTimeout(() => tryAddToCart(), 400);
-                closeModal();
-            }, 0);
-        };
-    }
+}
 
 
     // ─── EXECUTA APENAS EM PÁGINAS DE PRODUTO ────────────────────────────────────
     const isProductPage = window.location.pathname.includes('/produtos/') || window.location.pathname.includes('/produto/') || window.location.pathname.includes('/p/') || document.querySelector('meta[property="og:type"][content="product"]');
 
 
-    if (isProductPage) {
-        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-        else init();
-    }
+if (isProductPage) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+}
 
 
-})();
+}) ();
