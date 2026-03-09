@@ -144,8 +144,8 @@
 
         @media (min-width: 768px) {
             .q-btn-trigger-ia {
-                width: 75px;
-                height: 75px;
+                width: 65px;
+                height: 65px;
             }
         }
 
