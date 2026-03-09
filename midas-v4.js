@@ -568,21 +568,14 @@
                 alert('Ocorreu um erro ao processar sua imagem (ou chave/servidor indisponíveis). Tente novamente.');
             }
         };
-
-
-    };
-
-}
-
+    }
 
     // ─── EXECUTA APENAS EM PÁGINAS DE PRODUTO ────────────────────────────────────
     const isProductPage = window.location.pathname.includes('/produtos/') || window.location.pathname.includes('/produto/') || window.location.pathname.includes('/p/') || document.querySelector('meta[property="og:type"][content="product"]');
 
+    if (isProductPage) {
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+        else init();
+    }
 
-if (isProductPage) {
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-    else init();
-}
-
-
-}) ();
+})();
