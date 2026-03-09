@@ -350,7 +350,7 @@
         openBtn.innerHTML = stampImageHTML;
 
 
-        const imgContainers = ['.product__media-wrapper', '.product-gallery__media', '.product__media', '.product-image-main', '.product-media-container', '[data-media-id]', '.product__media-item', '.product-gallery', '.product-single__media', '.media-gallery'];
+        const imgContainers = ['.js-swiper-product', '[data-store^="product-image-"]', '.product__media-wrapper', '.product-gallery__media', '.product__media', '.product-image-main', '.product-media-container', '[data-media-id]', '.product__media-item', '.product-gallery', '.product-single__media', '.media-gallery'];
         let placed = false;
         for (const sel of imgContainers) {
             const el = document.querySelector(sel);
