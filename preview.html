@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview: Produto Falso Midas</title>
+    <!-- Essa meta tag diz ao script.js que estamos numa página de produto -->
+    <meta property="og:type" content="product" />
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #fafafa;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            gap: 40px;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .product-gallery {
+            flex: 1;
+            position: relative;
+        }
+
+        .product-gallery img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        h1.product__title {
+            font-size: 28px;
+            margin-top: 0;
+        }
+
+        .price {
+            font-size: 24px;
+            color: #333;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .btn-add-to-cart {
+            background: #000;
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- O container da imagem do produto (o script vai injetar o botão de provador aqui) -->
+        <div class="product-gallery">
+            <div class="product__media-wrapper">
+                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    alt="Camiseta Oversized">
+            </div>
+        </div>
+
+        <!-- Informações do produto -->
+        <div class="product-info">
+            <h1 class="product__title">Camiseta Oversized Preta Midas</h1>
+            <p class="price">R$ 129,90</p>
+            <p>Selecione um tamanho e veja como fica no seu corpo antes de comprar!</p>
+            <br>
+            <select style="width: 100%; padding: 15px; margin-bottom: 20px;">
+                <option value="p">P</option>
+                <option value="m">M</option>
+                <option value="g">G</option>
+                <option value="gg">GG</option>
+            </select>
+            <button class="btn-add-to-cart">Comprar Agora</button>
+        </div>
+    </div>
+
+    <script src="./midas-v9.js"></script>
+
+</body>
+
+</html>

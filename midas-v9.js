@@ -269,7 +269,7 @@
                     <div id="q-step-upload">
                         <div class="q-lead-form" style="margin-bottom:0;">
                             <div class="q-group">
-                                <label style="text-transform:uppercase; letter-spacing:1px; font-weight:700; font-size:10px;">Seu WhatsApp</label>
+                                <label style="text-transform:uppercase; letter-spacing:1px; font-weight:700; font-size:10px;">Seu Celular</label>
                                 <input type="tel" id="q-phone" class="q-input" placeholder="(11) 99999-9999" maxlength="15">
                                 <div id="q-phone-error" class="q-status-msg">Insira um número válido</div>
                             </div>
@@ -280,7 +280,7 @@
                             <div id="q-product-images-container" style="display:flex; gap:15px; justify-content: flex-start;"></div>
                         </div>
 
-                        <div style="font-weight:700; color:#ef4444; font-size:10px; text-align:left; margin-top:20px; line-height:1.4; text-transform:uppercase; letter-spacing:0.5px;">
+                        <div style="font-weight:700; color:#ef4444; font-size:10px; text-align:center; margin-top:20px; line-height:1.4; text-transform:uppercase; letter-spacing:0.5px;">
                             <span style="color:#eab308; font-size:12px;">⚠️</span> SE VOCÊ ESCOLHEU A PEÇA DE COSTAS, ENVIE UMA FOTO SUA DE COSTAS TAMBÉM!
                         </div>
 
@@ -404,7 +404,7 @@
         let selectedProductImgUrl = '';
 
         function extractImages() {
-            const possibleContainers = Array.from(document.querySelectorAll('.js-product-slide, .product__media, .product-single__photo, [data-component="product.gallery"], .swiper-slide:not(.swiper-slide-duplicate), .product-image-container'));
+            const possibleContainers = Array.from(document.querySelectorAll('.js-product-slide, .product__media, .product-single__photo, [data-component="product.gallery"], .swiper-slide:not(.swiper-slide-duplicate), .product-image-container, .slider-wrapper'));
             let imgEls = [];
             possibleContainers.forEach(c => {
                 if (!c.closest('#q-modal-ia')) {
@@ -413,13 +413,17 @@
                 }
             });
             let uniqueImgs = [];
-            let signatures = [];
             imgEls.forEach(img => {
                 let src = img.src || img.dataset?.src;
-                if (!src || src.includes('data:image') || src.includes('logo_provador') || src.includes('provoulevou')) return;
-                let sig = src.replace(/-\d+-\d+\.webp|\?v=\d+|_\d+x\d+/, '');
-                if (!signatures.includes(sig)) {
-                    signatures.push(sig);
+                if (!src || src.includes('data:image')) return;
+
+                const lowerSrc = src.toLowerCase();
+                const invalidKeywords = ['provador', 'logo', 'provoulevou', 'icon', 'play', 'video'];
+                if (invalidKeywords.some(kw => lowerSrc.includes(kw))) return;
+
+                let cleanSrc = src.split('?')[0].replace(/-\d+-\d+\.webp|_\d+x\d+/, '');
+
+                if (!uniqueImgs.some(u => u.split('?')[0].replace(/-\d+-\d+\.webp|_\d+x\d+/, '') === cleanSrc)) {
                     uniqueImgs.push(src);
                 }
             });
