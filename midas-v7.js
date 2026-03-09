@@ -267,24 +267,41 @@
 
                     </div>
                     <div id="q-step-upload">
-                        <div class="q-lead-form" id="q-photo-selector-group" style="margin-top:0; margin-bottom:0; display:none;">
-                            <label>Selecione a foto da peça:</label>
-                            <div id="q-product-images-container" style="display:flex; gap:10px;"></div>
-                            <p style="margin:8px 0 0;font-size:9px;color:#ef4444;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;">⚠️ Se você escolheu a peça de costas, envie uma foto sua de costas também!</p>
-                        </div>
-                        <div class="q-lead-form">
+                        <div class="q-lead-form" style="margin-bottom:0;">
                             <div class="q-group">
                                 <label>Seu WhatsApp</label>
                                 <input type="tel" id="q-phone" class="q-input" placeholder="(11) 99999-9999" maxlength="15">
                                 <div id="q-phone-error" class="q-status-msg">Insira um número válido</div>
                             </div>
+                            
+                            <div class="q-input-row" style="margin-top:20px;">
+                                <div class="q-group">
+                                    <label>Altura (cm)</label>
+                                    <input type="number" id="q-h-val" class="q-input" placeholder="Ex: 175" min="100" max="230">
+                                </div>
+                                <div class="q-group">
+                                    <label>Peso (kg)</label>
+                                    <input type="number" id="q-w-val" class="q-input" placeholder="Ex: 80" min="30" max="200">
+                                </div>
+                            </div>
                         </div>
-                        <p style="margin:10px 0 10px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--q-text-light);text-align:center;">Sua foto deve seguir estes requisitos:</p>
+
+                        <div class="q-lead-form" id="q-photo-selector-group" style="margin-top:30px; margin-bottom:0; display:none; flex-direction: column; align-items: center;">
+                            <label style="margin-bottom:15px; text-transform:uppercase; letter-spacing:1px; font-size:10px;">Escolha Frente ou Costas:</label>
+                            <div id="q-product-images-container" style="display:flex; gap:15px; justify-content: center;"></div>
+                        </div>
+
+                        <div style="background-color:#fef0c7; color:#b45309; border:1px solid #fde08b; padding:15px; border-radius:8px; font-size:10px; text-align:center; margin-top:20px; line-height:1.4;">
+                            ⚠️ Se você escolheu a foto de costas, envie uma foto sua também de costas, se escolheu a frente, envie de frente.
+                        </div>
+
+                        <p style="margin:25px 0 15px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--q-text-light);text-align:center;">Sua foto deve seguir estes requisitos:</p>
                         <div class="q-tips-grid" style="margin-top:0;">
                             <div class="q-tip-item"><i class="ph ph-t-shirt"></i><span>Com Roupa</span></div>
-                            <div class="q-tip-item"><i class="ph ph-person"></i><span>Corpo Inteiro</span></div>
+                            <div class="q-tip-item"><i class="ph ph-person"></i><span>Corpo Todo</span></div>
                             <div class="q-tip-item"><i class="ph ph-sun"></i><span>Boa Luz</span></div>
                         </div>
+
                         <div style="display:flex;gap:20px;justify-content:center;margin-top:30px;">
                             <div id="q-trigger-upload" style="width:120px;height:160px;border:1px solid var(--q-border);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:var(--q-gray);transition:0.3s;">
                                 <i class="ph ph-camera-plus" style="font-size:32px;color:var(--q-primary);margin-bottom:10px;"></i>
@@ -403,7 +420,7 @@
             let signatures = [];
             imgEls.forEach(img => {
                 let src = img.src || img.dataset?.src;
-                if (!src || src.includes('data:image')) return;
+                if (!src || src.includes('data:image') || src.includes('logo_provador')) return;
                 let sig = src.replace(/-\d+-\d+\.webp|\?v=\d+|_\d+x\d+/, '');
                 if (!signatures.includes(sig)) {
                     signatures.push(sig);
@@ -517,8 +534,12 @@
             const phoneOk = nums.length >= 10 && nums.length <= 11;
             document.getElementById('q-phone-error').style.display = (phoneInput.value.length > 0 && !phoneOk) ? 'block' : 'none';
             phoneInput.style.borderColor = (phoneInput.value.length > 0 && !phoneOk) ? '#ef4444' : 'var(--q-border)';
-            // Medidas removidas, precisamos apenas do telefone e foto
-            genBtn.disabled = !(userPhoto && phoneOk);
+
+            const hVal = document.getElementById('q-h-val').value;
+            const wVal = document.getElementById('q-w-val').value;
+            const hwOk = hVal > 0 && wVal > 0;
+
+            genBtn.disabled = !(userPhoto && phoneOk && hwOk);
         }
 
 
@@ -571,11 +592,15 @@
                 fd.append('api_key', keyToUse);
 
 
-                // Para compatibilidade com o backend que pode esperar estes campos, enviamos vazio
+                const hVal = document.getElementById('q-h-val').value;
+                const wVal = document.getElementById('q-w-val').value;
+
                 if (currentProduct.category === 'top') {
-                    fd.append('height', '');
-                    fd.append('weight', '');
+                    fd.append('height', hVal);
+                    fd.append('weight', wVal);
                 } else {
+                    fd.append('height', hVal);
+                    fd.append('weight', wVal);
                     fd.append('cintura', '');
                     fd.append('quadril', '');
                 }
