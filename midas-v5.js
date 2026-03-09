@@ -267,6 +267,11 @@
 
                     </div>
                     <div id="q-step-upload">
+                        <div class="q-lead-form" id="q-photo-selector-group" style="margin-top:0; margin-bottom:0; display:none;">
+                            <label>Selecione a foto da peça:</label>
+                            <div id="q-product-images-container" style="display:flex; gap:10px;"></div>
+                            <p style="margin:8px 0 0;font-size:9px;color:#ef4444;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;">⚠️ Se você escolheu a peça de costas, envie uma foto sua de costas também!</p>
+                        </div>
                         <div class="q-lead-form">
                             <div class="q-group">
                                 <label>Seu WhatsApp</label>
@@ -390,7 +395,64 @@
 
 
         let userPhoto = null;
+        let selectedProductImgUrl = '';
 
+        function extractImages() {
+            const imgEls = Array.from(document.querySelectorAll('.js-product-slide img, .product__media img, .product-single__photo, [data-component="product.gallery"] img, .swiper-slide:not(.swiper-slide-duplicate) img, .product-image-container img'));
+            let uniqueImgs = [];
+            let signatures = [];
+            imgEls.forEach(img => {
+                let src = img.src || img.dataset?.src;
+                if (!src || src.includes('data:image')) return;
+                let sig = src.replace(/-\d+-\d+\.webp|\?v=\d+|_\d+x\d+/, '');
+                if (!signatures.includes(sig)) {
+                    signatures.push(sig);
+                    uniqueImgs.push(src);
+                }
+            });
+            if (uniqueImgs.length === 0) {
+                const og = document.querySelector('meta[property="og:image"]')?.content;
+                if (og) uniqueImgs.push(og);
+            }
+            return uniqueImgs.slice(0, 2);
+        }
+
+        function populateImageSelector() {
+            const imgs = extractImages();
+            const container = document.getElementById('q-product-images-container');
+            const group = document.getElementById('q-photo-selector-group');
+            container.innerHTML = '';
+
+            if (imgs.length < 2) {
+                group.style.display = 'none';
+                selectedProductImgUrl = imgs[0] || '';
+                return;
+            }
+
+            group.style.display = 'flex';
+            group.style.flexDirection = 'column';
+            selectedProductImgUrl = imgs[0];
+
+            imgs.forEach((url, i) => {
+                const box = document.createElement('div');
+                box.style.cssText = `width:70px; height:90px; border: 2px solid ${i === 0 ? 'var(--q-primary)' : 'var(--q-gray)'}; border-radius:4px; overflow:hidden; cursor:pointer; opacity: ${i === 0 ? '1' : '0.5'}; transition: 0.3s;`;
+                const img = document.createElement('img');
+                img.src = url;
+                img.style.cssText = 'width:100%; height:100%; object-fit:cover;';
+                box.appendChild(img);
+
+                box.onclick = () => {
+                    selectedProductImgUrl = url;
+                    Array.from(container.children).forEach(child => {
+                        child.style.borderColor = 'var(--q-gray)';
+                        child.style.opacity = '0.5';
+                    });
+                    box.style.borderColor = 'var(--q-primary)';
+                    box.style.opacity = '1';
+                };
+                container.appendChild(box);
+            });
+        }
 
         function openModal() {
             modal.style.display = 'flex';
@@ -416,6 +478,7 @@
             }
             const prodName = document.querySelector('h1.product__title,.product-single__title,h1')?.innerText || document.title;
             applyProduct(detectProduct(prodName));
+            populateImageSelector();
             openModal();
         };
 
@@ -487,8 +550,7 @@
                 return;
             }
 
-            const prodImgTag = document.querySelector('.product__media img,img.product-featured-media,.product-single__photo');
-            const prodImg = prodImgTag ? prodImgTag.src : (document.querySelector('meta[property="og:image"]')?.content || '');
+            const prodImg = selectedProductImgUrl || (document.querySelector('meta[property="og:image"]')?.content || '');
             const prodName = document.querySelector('h1.product__title,.product-single__title,h1')?.innerText || document.title;
 
 
