@@ -240,7 +240,11 @@
                     <div id="q-header-provador">
                         <h1 style="margin:0 0 10px 0;font-size:20px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Provador Virtual</h1>
                         <div style="margin:0;text-align:center;">
-  <h2 style="margin:0;font-size:18px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">MIDAS</h2>
+  <img 
+    src="https://acdn-us.mitiendanube.com/stores/004/739/314/themes/common/logo-668716748-1718371761-c5981d6dbab829bfc242001f304afdf91718371761-480-0.webp" 
+    alt="MIDAS" 
+    style="height:30px;width:auto;display:inline-block;filter:brightness(0);"
+  />
 </div>
 
 
