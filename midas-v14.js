@@ -160,7 +160,7 @@
         .q-input-row { display: flex; gap: 15px; }
         .q-group { flex: 1; }
         .q-group label { display: block; font-size: 9px; font-weight: 600; letter-spacing: 1.5px; color: var(--q-text); margin-bottom: 8px; text-transform: uppercase; }
-        .q-input { width: 100%; padding: 18px 15px; border: 1px solid var(--q-border); font-size: 14px; font-family: 'Inter', sans-serif; background: transparent; color: var(--q-text); outline: none; box-sizing: border-box; }
+        .q-input { width: 100%; padding: 22px 18px; border: 1px solid var(--q-border); font-size: 16px; font-family: 'Inter', sans-serif; background: transparent; color: var(--q-text); outline: none; box-sizing: border-box; }
         .q-input:focus { border-width: 2px; padding: 14px; }
         .q-input-hint { font-size: 9px; color: var(--q-text-light); letter-spacing: 0.5px; margin-top: 6px; }
         .q-btn-black { background: var(--q-primary); color: var(--q-bg); border: 1px solid var(--q-primary); width: 100%; padding: 18px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; margin-top: 20px; transition: 0.3s; }
