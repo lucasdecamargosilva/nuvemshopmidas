@@ -22,4 +22,4 @@
 {# Related products #}
 {% include 'snipplets/product/product-related.tpl' %}
 
-<script src="https://cdn.jsdelivr.net/gh/lucasdecamargosilva/nuvemshopmidas@main/midas-v13.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/lucasdecamargosilva/nuvemshopmidas@main/midas-v14.js" defer></script>

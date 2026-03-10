@@ -125,8 +125,8 @@
             border: none;
             padding: 0;
             cursor: pointer;
-            width: 55px;
-            height: 55px;
+            width: 62px;
+            height: 62px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -160,7 +160,7 @@
         .q-input-row { display: flex; gap: 15px; }
         .q-group { flex: 1; }
         .q-group label { display: block; font-size: 9px; font-weight: 600; letter-spacing: 1.5px; color: var(--q-text); margin-bottom: 8px; text-transform: uppercase; }
-        .q-input { width: 100%; padding: 15px; border: 1px solid var(--q-border); font-size: 13px; font-family: 'Inter', sans-serif; background: transparent; color: var(--q-text); outline: none; box-sizing: border-box; }
+        .q-input { width: 100%; padding: 18px 15px; border: 1px solid var(--q-border); font-size: 14px; font-family: 'Inter', sans-serif; background: transparent; color: var(--q-text); outline: none; box-sizing: border-box; }
         .q-input:focus { border-width: 2px; padding: 14px; }
         .q-input-hint { font-size: 9px; color: var(--q-text-light); letter-spacing: 0.5px; margin-top: 6px; }
         .q-btn-black { background: var(--q-primary); color: var(--q-bg); border: 1px solid var(--q-primary); width: 100%; padding: 18px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; margin-top: 20px; transition: 0.3s; }
@@ -308,7 +308,7 @@
                             <div id="q-product-images-container" style="display:flex; gap:15px; justify-content: center;"></div>
                         </div>
 
-                        <div style="font-weight:700; color:#ef4444; font-size:10px; text-align:center; width:100%; display:block; margin-top:20px; line-height:1.4; text-transform:uppercase; letter-spacing:0.5px;">
+                        <div style="font-weight:700; color:#854d0e; font-size:10px; text-align:center; width:100%; display:block; margin-top:20px; line-height:1.4; text-transform:uppercase; letter-spacing:0.5px; background: #fef9c3; padding: 15px; border-radius: 8px; border: 1px solid #fef3c7; box-sizing: border-box;">
                             <span style="color:#eab308; font-size:12px;">⚠️</span> SE VOCÊ ESCOLHEU A PEÇA DE COSTAS, ENVIE UMA FOTO SUA DE COSTAS TAMBÉM!
                         </div>
 
