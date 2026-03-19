@@ -329,7 +329,7 @@
                                 <img id="q-pre-img" style="width:100%;height:100%;object-fit:cover;">
                             </div>
                         </div>
-                        <label style="display:flex;align-items:flex-start;gap:8px;margin-top:8px;cursor:pointer;font-size:12px;line-height:1.4;color:#64748b;">
+                        <label style="display:flex;align-items:flex-start;gap:8px;margin-top:8px;cursor:pointer;font-size:12px;line-height:1.4;color:#64748b;justify-content:center;text-align:center;">
                             <input type="checkbox" id="q-accept-terms" style="margin-top:2px;cursor:pointer;accent-color:#000;">
                             Ao continuar, concordo com os <a href="http://provoulevou.com.br/termos.html" target="_blank" style="color:#8b5cf6;text-decoration:underline;">Termos e Condições</a>
                         </label>
