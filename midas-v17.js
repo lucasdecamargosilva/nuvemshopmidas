@@ -352,9 +352,9 @@
                     </div>
                     <div id="q-step-upload">
                         <div class="q-lead-form" style="margin-bottom:0;">
-                            <div class="q-group" style="display:flex; flex-direction:column; align-items:center;">
-                                <label style="text-transform:uppercase; letter-spacing:1px; font-weight:700; font-size:10px; text-align:center;">Seu Celular</label>
-                                <input type="tel" id="q-phone" class="q-input" placeholder="(11) 99999-9999" maxlength="15" style="width:100%; max-width:100%; box-sizing:border-box;">
+                            <div class="q-group">
+                                <label style="text-transform:uppercase; letter-spacing:1px; font-weight:700; font-size:10px;">Seu Celular</label>
+                                <input type="tel" id="q-phone" class="q-input" placeholder="(11) 99999-9999" maxlength="15">
                                 <div id="q-phone-error" class="q-status-msg">Insira um número válido</div>
                             </div>
                         </div>
