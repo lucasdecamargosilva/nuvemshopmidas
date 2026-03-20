@@ -149,6 +149,36 @@
             }
         }
 
+        /* ── BOTÃO INLINE (abaixo dos tamanhos) ─────────────────────────────── */
+        .q-btn-inline-provador {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 14px 20px;
+            background: transparent;
+            color: #000;
+            border: 1px solid #000;
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 600;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+            margin-bottom: 12px;
+        }
+        .q-btn-inline-provador:hover {
+            background: #000;
+            color: #fff;
+        }
+        .q-btn-inline-provador svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
         #q-modal-ia { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 999999; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; }
         .q-card-ia { background: var(--q-bg); width: 100%; max-width: 480px; padding: 0; position: relative; color: var(--q-text); border: 1px solid var(--q-border); max-height: 94vh; display: flex; flex-direction: column; overflow: hidden; }
         .q-content-scroll { padding: 40px 30px; overflow-y: auto; flex: 1; text-align: center; }
@@ -454,6 +484,41 @@
 
 
         const modal = document.getElementById('q-modal-ia');
+
+        // ── Botão inline abaixo dos tamanhos ──
+        const inlineBtn = document.createElement('button');
+        inlineBtn.className = 'q-btn-inline-provador';
+        inlineBtn.type = 'button';
+
+        const inlineSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        inlineSvg.setAttribute('viewBox', '0 0 24 24');
+        inlineSvg.setAttribute('fill', 'none');
+        inlineSvg.setAttribute('stroke', 'currentColor');
+        inlineSvg.setAttribute('stroke-width', '1.5');
+        inlineSvg.setAttribute('stroke-linecap', 'round');
+        inlineSvg.setAttribute('stroke-linejoin', 'round');
+        const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path1.setAttribute('d', 'M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2');
+        const circle1 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle1.setAttribute('cx', '12');
+        circle1.setAttribute('cy', '7');
+        circle1.setAttribute('r', '4');
+        inlineSvg.appendChild(path1);
+        inlineSvg.appendChild(circle1);
+        inlineBtn.appendChild(inlineSvg);
+
+        const inlineBtnText = document.createTextNode('Provador Virtual');
+        inlineBtn.appendChild(inlineBtnText);
+
+        inlineBtn.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            lockBodyScroll();
+        });
+
+        const variantsContainer = document.querySelector('.js-product-variants');
+        if (variantsContainer) {
+            variantsContainer.parentNode.insertBefore(inlineBtn, variantsContainer.nextSibling);
+        }
         const genBtn = document.getElementById('q-btn-generate');
         const confirmStep = document.getElementById('q-step-confirm');
         const confirmBtnYes = document.getElementById('q-btn-confirm-yes');
