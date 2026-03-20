@@ -179,7 +179,7 @@
             justify-content: center;
             gap: 6px;
             width: 100%;
-            padding: 8px 14px;
+            padding: 12px 14px;
             background: transparent;
             color: #000;
             border: 1px solid #000;
