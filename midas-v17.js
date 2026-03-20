@@ -209,7 +209,7 @@
         .q-tips-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 20px 0; margin: 20px 0; border-top: 1px solid var(--q-gray); border-bottom: 1px solid var(--q-gray); }
         .q-tip-item { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 9px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--q-text-light); }
         .q-tip-item i { color: var(--q-primary); font-size: 20px; }
-        .q-lead-form { width: 100%; box-sizing: border-box; margin: 30px 0 20px; display: flex; flex-direction: column; gap: 20px; text-align: left; align-items: stretch; }
+        .q-lead-form { width: 100%; box-sizing: border-box; margin: 30px 0 20px; display: flex; flex-direction: column; gap: 20px; text-align: center; align-items: stretch; }
         .q-input-row { display: flex; gap: 15px; }
         .q-group { width: 100%; flex: 1; }
         .q-group label { display: block; font-size: 9px; font-weight: 600; letter-spacing: 1.5px; color: var(--q-text); margin-bottom: 8px; text-transform: uppercase; }
