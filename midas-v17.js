@@ -156,20 +156,14 @@
             .q-content-scroll {
                 padding: 20px 16px !important;
             }
-            .q-lead-form {
-                width: 100% !important;
-                display: block !important;
-            }
             .q-group {
-                width: auto !important;
-                max-width: none !important;
-                display: block !important;
+                width: 100% !important;
+                flex: none !important;
             }
             .q-input {
+                width: -webkit-fill-available !important;
+                width: -moz-available !important;
                 width: 100% !important;
-                min-width: 0 !important;
-                max-width: 100% !important;
-                display: block !important;
                 box-sizing: border-box !important;
             }
         }
