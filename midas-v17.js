@@ -142,6 +142,29 @@
             overflow: visible;
         }
 
+        @media (max-width: 767px) {
+            .q-card-ia {
+                max-width: 100% !important;
+                width: 100% !important;
+                height: 100% !important;
+                max-height: 100vh !important;
+                border: none !important;
+            }
+            #q-modal-ia {
+                padding: 0 !important;
+            }
+            .q-group {
+                width: 100% !important;
+                max-width: 100% !important;
+                overflow: hidden;
+            }
+            .q-input {
+                width: 100% !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+            }
+        }
+
         @media (min-width: 768px) {
             .q-btn-trigger-ia {
                 width: 65px;
@@ -190,7 +213,7 @@
         .q-input-row { display: flex; gap: 15px; }
         .q-group { width: 100%; flex: 1; }
         .q-group label { display: block; font-size: 9px; font-weight: 600; letter-spacing: 1.5px; color: var(--q-text); margin-bottom: 8px; text-transform: uppercase; }
-        .q-input { width: 100%; padding: 22px 18px; border: 1px solid var(--q-border); font-size: 16px; font-family: 'Inter', sans-serif; background: transparent; color: var(--q-text); outline: none; box-sizing: border-box; -webkit-appearance: none; appearance: none; border-radius: 0; }
+        .q-input { width: 100%; min-width: 0; max-width: 100%; padding: 22px 18px; border: 1px solid var(--q-border); font-size: 16px; font-family: 'Inter', sans-serif; background: transparent; color: var(--q-text); outline: none; box-sizing: border-box; -webkit-appearance: none; -moz-appearance: none; appearance: none; border-radius: 0; }
         .q-input:focus { border-width: 2px; padding: 14px; }
         .q-input-hint { font-size: 9px; color: var(--q-text-light); letter-spacing: 0.5px; margin-top: 6px; }
         .q-btn-black { background: var(--q-primary); color: var(--q-bg); border: 1px solid var(--q-primary); width: 100%; padding: 18px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; margin-top: 20px; transition: 0.3s; }
