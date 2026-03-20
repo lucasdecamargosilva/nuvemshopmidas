@@ -158,17 +158,19 @@
             }
             .q-lead-form {
                 width: 100% !important;
+                display: block !important;
             }
             .q-group {
-                width: 100% !important;
-                max-width: 100% !important;
-                overflow: hidden;
+                width: auto !important;
+                max-width: none !important;
+                display: block !important;
             }
             .q-input {
                 width: 100% !important;
                 min-width: 0 !important;
                 max-width: 100% !important;
                 display: block !important;
+                box-sizing: border-box !important;
             }
         }
 
