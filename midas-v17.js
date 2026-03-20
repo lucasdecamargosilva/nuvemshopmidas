@@ -153,6 +153,12 @@
             #q-modal-ia {
                 padding: 0 !important;
             }
+            .q-content-scroll {
+                padding: 20px 16px !important;
+            }
+            .q-lead-form {
+                width: 100% !important;
+            }
             .q-group {
                 width: 100% !important;
                 max-width: 100% !important;
@@ -162,6 +168,7 @@
                 width: 100% !important;
                 min-width: 0 !important;
                 max-width: 100% !important;
+                display: block !important;
             }
         }
 
