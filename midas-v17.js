@@ -154,16 +154,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 6px;
             width: 100%;
-            padding: 14px 20px;
+            padding: 8px 14px;
             background: transparent;
             color: #000;
             border: 1px solid #000;
             font-family: 'Work Sans', sans-serif;
             font-weight: 600;
-            font-size: 11px;
-            letter-spacing: 2px;
+            font-size: 10px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             cursor: pointer;
             transition: background 0.3s, color 0.3s;
@@ -174,8 +174,8 @@
             color: #fff;
         }
         .q-btn-inline-provador svg {
-            width: 18px;
-            height: 18px;
+            width: 14px;
+            height: 14px;
             flex-shrink: 0;
         }
 
