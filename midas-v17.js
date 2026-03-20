@@ -360,7 +360,7 @@
                         </div>
 
                         <div class="q-lead-form" id="q-photo-selector-group" style="margin-top:30px; margin-bottom:0; display:none; flex-direction: column; align-items: center;">
-                            <label style="margin-bottom:15px; text-transform:uppercase; letter-spacing:1px; font-weight:400; font-size:12px; text-align:center; width:100%;">Selecione a foto da peça:</label>
+                            <label style="margin-bottom:25px; text-transform:uppercase; letter-spacing:1px; font-weight:400; font-size:12px; text-align:center; width:100%;">Selecione a foto da peça:</label>
                             <div id="q-product-images-container" style="display:flex; gap:15px; justify-content: center;"></div>
                         </div>
 
