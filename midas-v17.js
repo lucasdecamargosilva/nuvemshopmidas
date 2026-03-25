@@ -116,31 +116,6 @@
             50% { transform: rotate(0deg); }
             100% { transform: rotate(0deg); }
         }
-        .q-btn-trigger-ia {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            z-index: 100;
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            width: 62px;
-            height: 62px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.18));
-            animation: q-shake 3s infinite;
-        }
-        .q-btn-trigger-ia:hover {
-            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.28));
-        }
-        .q-btn-trigger-ia svg {
-            width: 100%;
-            height: 100%;
-            overflow: visible;
-        }
 
         @media (max-width: 767px) {
             .q-card-ia {
@@ -168,42 +143,6 @@
             }
         }
 
-        @media (min-width: 768px) {
-            .q-btn-trigger-ia {
-                width: 65px;
-                height: 65px;
-            }
-        }
-
-        /* ── BOTÃO INLINE (abaixo dos tamanhos) ─────────────────────────────── */
-        .q-btn-inline-provador {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            width: 100%;
-            padding: 12px 14px;
-            background: transparent;
-            color: #000;
-            border: 1px solid #000;
-            font-family: 'Work Sans', sans-serif;
-            font-weight: 600;
-            font-size: 10px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: background 0.3s, color 0.3s;
-            margin-bottom: 12px;
-        }
-        .q-btn-inline-provador:hover {
-            background: #000;
-            color: #fff;
-        }
-        .q-btn-inline-provador svg {
-            width: 14px;
-            height: 14px;
-            flex-shrink: 0;
-        }
 
         #q-modal-ia { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 999999; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; }
         .q-card-ia { background: var(--q-bg); width: 100%; max-width: 480px; padding: 0; position: relative; color: var(--q-text); border: 1px solid var(--q-border); max-height: 94vh; display: flex; flex-direction: column; overflow: hidden; }
@@ -485,66 +424,7 @@
         document.body.appendChild(modalContainer);
 
 
-        // ── Botão imagem PNG ──
-        const openBtn = document.createElement('button');
-        openBtn.className = 'q-btn-trigger-ia';
-        openBtn.id = 'q-open-ia';
-        openBtn.setAttribute('aria-label', 'Abrir Provador Virtual');
-        openBtn.innerHTML = stampImageHTML;
-
-
-        const imgContainers = ['.js-product-slide', '.product-image-column', '.js-swiper-product', '[data-store^="product-image-"]', '.product__media-wrapper', '.product-gallery__media', '.product__media', '.product-image-main', '.product-media-container', '[data-media-id]', '.product__media-item', '.product-gallery', '.product-single__media', '.media-gallery'];
-        let placed = false;
-        for (const sel of imgContainers) {
-            const el = document.querySelector(sel);
-            if (el) {
-                if (window.getComputedStyle(el).position === 'static') el.style.position = 'relative';
-                el.appendChild(openBtn);
-                placed = true; break;
-            }
-        }
-        if (!placed) {
-            openBtn.style.cssText = 'position:fixed;bottom:30px;right:20px;top:auto;width:55px;height:55px;';
-            document.body.appendChild(openBtn);
-        }
-
-
         const modal = document.getElementById('q-modal-ia');
-
-        // ── Botão inline abaixo dos tamanhos ──
-        const inlineBtn = document.createElement('button');
-        inlineBtn.className = 'q-btn-inline-provador';
-        inlineBtn.type = 'button';
-
-        const inlineSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        inlineSvg.setAttribute('viewBox', '0 0 24 24');
-        inlineSvg.setAttribute('fill', 'none');
-        inlineSvg.setAttribute('stroke', 'currentColor');
-        inlineSvg.setAttribute('stroke-width', '1.5');
-        inlineSvg.setAttribute('stroke-linecap', 'round');
-        inlineSvg.setAttribute('stroke-linejoin', 'round');
-        const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path1.setAttribute('d', 'M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2');
-        const circle1 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        circle1.setAttribute('cx', '12');
-        circle1.setAttribute('cy', '7');
-        circle1.setAttribute('r', '4');
-        inlineSvg.appendChild(path1);
-        inlineSvg.appendChild(circle1);
-        inlineBtn.appendChild(inlineSvg);
-
-        const inlineBtnText = document.createTextNode('Provador Virtual');
-        inlineBtn.appendChild(inlineBtnText);
-
-        inlineBtn.addEventListener('click', () => {
-            modal.style.display = 'flex';
-            lockBodyScroll();
-        });
-
-        const variantsContainer = document.querySelector('.js-product-variants');
-        if (variantsContainer) {
-            variantsContainer.parentNode.insertBefore(inlineBtn, variantsContainer.nextSibling);
-        }
         const genBtn = document.getElementById('q-btn-generate');
         const confirmStep = document.getElementById('q-step-confirm');
         const confirmBtnYes = document.getElementById('q-btn-confirm-yes');
