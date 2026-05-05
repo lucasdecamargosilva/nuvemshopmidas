@@ -641,6 +641,9 @@
 
         genBtn.onclick = () => {
             if (!userPhoto) return;
+            const _gNums = (phoneInput.value || '').replace(/\D/g, '');
+            const _gPhoneOk = (_gNums.length === 10 || _gNums.length === 11) && /^[1-9][1-9]/.test(_gNums) && (_gNums.length === 10 || _gNums[2] === '9');
+            if (!_gPhoneOk) { phoneInput.focus(); return; }
             confirmStep.style.display = 'flex';
         };
 
