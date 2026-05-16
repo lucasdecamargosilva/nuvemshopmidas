@@ -668,95 +668,116 @@
         };
 
         confirmBtnYes.onclick = async () => {
-            confirmStep.style.display = 'none';
-            // 🚨 VALIDAÇÃO BÁSICA NO FRONT 🚨
-            const keyToUse = window.PROVOU_LEVOU_API_KEY;
-            if (!keyToUse || keyToUse.includes("COLOQUE_A_CHAVE_AQUI")) {
-                alert("Erro: API Key não configurada neste script.");
-                return;
-            }
-
-            const prodImg = selectedProductImgUrl || (document.querySelector('meta[property="og:image"]')?.content || '');
-            const prodName = document.querySelector('h1.product__title,.product-single__title,h1')?.innerText || document.title;
 
 
-            uploadStep.style.display = 'none';
-            document.getElementById('q-loading-box').style.display = 'block';
+            if (window._provouLevouBusy) return;
+
+
+            window._provouLevouBusy = true;
 
 
             try {
-                const fd = new FormData();
-                fd.append('person_image', userPhoto);
-                fd.append('whatsapp', '55' + phoneInput.value.replace(/\D/g, ''));
-                fd.append('phone_raw', phoneInput.value);
-                fd.append('product_name', prodName);
-                fd.append('product_type', currentProduct.category);
-                fd.append('product_fit', currentProduct.fit);
-
-                // 👉 INJETA A CHAVE NO FORM DATA PRO N8N LER
-                fd.append('api_key', keyToUse);
-
-
-                if (currentProduct.category === 'top') {
-                    fd.append('height', '');
-                    fd.append('weight', '');
-                } else {
-                    fd.append('height', '');
-                    fd.append('weight', '');
-                    fd.append('cintura', '');
-                    fd.append('quadril', '');
+                confirmStep.style.display = 'none';
+                // 🚨 VALIDAÇÃO BÁSICA NO FRONT 🚨
+                const keyToUse = window.PROVOU_LEVOU_API_KEY;
+                if (!keyToUse || keyToUse.includes("COLOQUE_A_CHAVE_AQUI")) {
+                    alert("Erro: API Key não configurada neste script.");
+                    return;
                 }
 
-
-                if (prodImg) {
-                    try { const b = await fetch(prodImg).then(r => r.blob()); fd.append('product_image', b, 'p.png'); } catch (_) { }
-                }
+                const prodImg = selectedProductImgUrl || (document.querySelector('meta[property="og:image"]')?.content || '');
+                const prodName = document.querySelector('h1.product__title,.product-single__title,h1')?.innerText || document.title;
 
 
-                calculateFinalSize();
+                uploadStep.style.display = 'none';
+                document.getElementById('q-loading-box').style.display = 'block';
 
 
-                const res = await fetch(WEBHOOK_PROVA, { method: 'POST', body: fd });
+                try {
+                    const fd = new FormData();
+                    fd.append('person_image', userPhoto);
+                    fd.append('whatsapp', '55' + phoneInput.value.replace(/\D/g, ''));
+                    fd.append('phone_raw', phoneInput.value);
+                    fd.append('product_name', prodName);
+                    fd.append('product_type', currentProduct.category);
+                    fd.append('product_fit', currentProduct.fit);
 
-                const contentType = res.headers.get("content-type") || "";
-                if (contentType.includes("application/json")) {
-                    const data = await res.json();
-                    if (data.error) {
+                    // 👉 INJETA A CHAVE NO FORM DATA PRO N8N LER
+                    fd.append('api_key', keyToUse);
+
+
+                    if (currentProduct.category === 'top') {
+                        fd.append('height', '');
+                        fd.append('weight', '');
+                    } else {
+                        fd.append('height', '');
+                        fd.append('weight', '');
+                        fd.append('cintura', '');
+                        fd.append('quadril', '');
+                    }
+
+
+                    if (prodImg) {
+                        try { const b = await fetch(prodImg).then(r => r.blob()); fd.append('product_image', b, 'p.png'); } catch (_) { }
+                    }
+
+
+                    calculateFinalSize();
+
+
+                    const res = await fetch(WEBHOOK_PROVA, { method: 'POST', body: fd });
+
+                    const contentType = res.headers.get("content-type") || "";
+                    if (contentType.includes("application/json")) {
+                        const data = await res.json();
+                        if (data.error) {
+                            document.getElementById('q-loading-box').style.display = 'none';
+                            document.getElementById('q-step-upload').style.display = 'block';
+                            if (data.error === "Chave invalida, vencida ou inativa." || data.error.includes("vencida ou inativa")) {
+                                alert("App desativado nesta loja");
+                            } else {
+                                alert(data.error);
+                            }
+                            return;
+                        }
+                    }
+
+                    if (res.ok) {
+                        const blob = await res.blob();
+                        document.getElementById('q-loading-box').style.display = 'none';
+                        document.getElementById('q-final-view-img').src = URL.createObjectURL(blob);
+
+
+                        // Size recomendation desativado. DOM info removido da tela.
+
+
+                        document.querySelector('.q-card-ia').classList.add('is-result');
+                        document.getElementById('q-step-result').style.display = 'flex';
+
+
+                    } else if (res.status === 401 || res.status === 403) {
                         document.getElementById('q-loading-box').style.display = 'none';
                         document.getElementById('q-step-upload').style.display = 'block';
-                        if (data.error === "Chave invalida, vencida ou inativa." || data.error.includes("vencida ou inativa")) {
-                            alert("App desativado nesta loja");
-                        } else {
-                            alert(data.error);
-                        }
-                        return;
-                    }
-                }
-
-                if (res.ok) {
-                    const blob = await res.blob();
-                    document.getElementById('q-loading-box').style.display = 'none';
-                    document.getElementById('q-final-view-img').src = URL.createObjectURL(blob);
-
-
-                    // Size recomendation desativado. DOM info removido da tela.
-
-
-                    document.querySelector('.q-card-ia').classList.add('is-result');
-                    document.getElementById('q-step-result').style.display = 'flex';
-
-
-                } else if (res.status === 401 || res.status === 403) {
+                        alert("App desativado nesta loja");
+                    } else { throw new Error(); }
+                } catch (e) {
                     document.getElementById('q-loading-box').style.display = 'none';
                     document.getElementById('q-step-upload').style.display = 'block';
-                    alert("App desativado nesta loja");
-                } else { throw new Error(); }
-            } catch (e) {
-                document.getElementById('q-loading-box').style.display = 'none';
-                document.getElementById('q-step-upload').style.display = 'block';
-                alert('Ocorreu um erro ao processar sua imagem (ou chave/servidor indisponíveis). Tente novamente.');
-            }
-        };
+                    alert('Ocorreu um erro ao processar sua imagem (ou chave/servidor indisponíveis). Tente novamente.');
+                }
+        
+
+
+            } finally {
+
+
+                window._provouLevouBusy = false;
+
+
+            }}
+
+
+        ;
     }
 
     // ─── EXECUTA APENAS EM PÁGINAS DE PRODUTO ────────────────────────────────────
